@@ -1,75 +1,71 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StokKontrol_API.Entities.Entities;
-using StokKontrol_API.Repositories.Context;
 using StokKontrol_API.Service.Abstract;
 
 namespace StokKontrol_API.API.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class CategoryController : ControllerBase
+    public class SupplierController : ControllerBase
     {
-        private readonly IGenericService<Category> _service;
+        private readonly IGenericService<Supplier> _service;
 
-        public CategoryController(IGenericService<Category> service)
+        public SupplierController(IGenericService<Supplier> service)
         {
             _service = service;
         }
 
-        // GET: api/TumKategorileriGetir
+        // GET: api/TumTedarikcileriGetir
         [HttpGet]
-        public IActionResult TumKategorileriGetir()
+        public IActionResult TumTedarikcileriGetir()
         {
             return Ok(_service.GetAll());
         }
 
-        // GET: api/AktifKategorileriGetir/5
+        // GET: api/AktifTedarikcileriGetir
         [HttpGet]
-        public IActionResult AktifKategorileriGetir()
+        public IActionResult AktifTedarikcileriGetir()
         {
             return Ok(_service.GetActive());
         }
 
+        // GET: api/IdyeGoreTedarikcileriGetir/5
         [HttpGet("{id}")]
-        public IActionResult IdyeGoreKategorileriGetir(int id)
+        public IActionResult IdyeGoreTedarikcileriGetir(int id)
         {
             return Ok(_service.GetById(id));
         }
 
-        // POST: api/category/KategoriEkle
+        // POST: api/supplier/TedarikciEkle
         [HttpPost]
-        public IActionResult KategoriEkle(Category category)
+        public IActionResult TedarikciEkle(Supplier supplier)
         {
-            _service.Add(category);
+            _service.Add(supplier);
 
-            return CreatedAtAction("IdyeGoreKategorileriGetir", new { id = category.Id }, category);
+            return CreatedAtAction("IdyeGoreTedarikcileriGetir", new { id = supplier.Id }, supplier);
         }
 
         // PUT: api/KategoriGuncelle/5
         [HttpPut("{id}")]
-        public IActionResult KategoriGuncelle(int id, Category category)
+        public IActionResult TedarikciGuncelle(int id, Supplier supplier)
         {
-            if (id != category.Id)
+            if (id != supplier.Id)
             {
                 return BadRequest();
             }
 
-            //_service.Entry(category).State = EntityState.Modified;
+            //_service.Entry(supplier).State = EntityState.Modified;
 
             try
             {
-                _service.Update(category);
-                return Ok(category);
+                _service.Update(supplier);
+                return Ok(supplier);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!categoryExists(id))
+                if (!supplierExists(id))
                 {
                     return NotFound();
                 }
@@ -78,37 +74,37 @@ namespace StokKontrol_API.API.Controllers
             return NoContent();
         }
 
-        // DELETE: api/category/5
+        // DELETE: api/TedarikciSil/5
         [HttpDelete("{id}")]
-        public IActionResult KategoriSil(int id)
+        public IActionResult TedarikciSil(int id)
         {
-            var category = _service.GetById(id);
-            if (category == null)
+            var supplier = _service.GetById(id);
+            if (supplier == null)
             {
                 return NotFound();
             }
             try
             {
-                _service.Remove(category);
-                return Ok("Kategori Silindi");
+                _service.Remove(supplier);
+                return Ok("Tedarikçi Silindi");
             }
             catch (Exception)
             {
                 return BadRequest();
             }
-            
+
         }
 
-        private bool categoryExists(int id)
+        private bool supplierExists(int id)
         {
             return _service.Any(e => e.Id == id);
         }
 
         [HttpGet("id")]
-        public IActionResult KategoriAktifleştir(int id)
+        public IActionResult TedarikciAktifleştir(int id)
         {
-            var category = _service.GetById(id);
-            if (category == null)
+            var supplier = _service.GetById(id);
+            if (supplier == null)
             {
                 return NotFound();
             }

@@ -25,6 +25,7 @@ namespace StokKontrol_API.Repositories.Concrete
         {
             try
             {
+                item.AddedDate = DateTime.Now;
                 _context.Set<T>().Add(item);
                 return Save() > 0; // 1 satır etkileniyorsa true döndürsün.
             }
@@ -40,7 +41,12 @@ namespace StokKontrol_API.Repositories.Concrete
             {
                 using (TransactionScope ts = new TransactionScope())
                 {
-                    _context.Set<T>().AddRange(items);
+                    foreach (T item in items) 
+                    {
+                        item.AddedDate = DateTime.Now;
+                        _context.Set<T>().Add(item);
+                    }
+                    //_context.Set<T>().AddRange(items);
                     ts.Complete(); // Tüm işlemler başarılı olduğunda, yani tüm ekleme işlemleri başarılı olduğunda Complete() olmuş olacak.
                     return Save() > 0; // 1 veya daha fazla satır ekleniyorsa...
                 }
@@ -151,6 +157,7 @@ namespace StokKontrol_API.Repositories.Concrete
         {
             try
             {
+                item.ModifiedDate = DateTime.Now;
                 _context.Set<T>().Update(item);
                 return Save() > 0;
             }
@@ -163,7 +170,7 @@ namespace StokKontrol_API.Repositories.Concrete
         public bool Activate(int id)
         {
             T item = GetById(id);
-            item.IsActive = false;
+            item.IsActive = true;
             return Update(item);
         }
 
