@@ -11,7 +11,7 @@ namespace StokKontrol_API.Entities.Entities
     {
         public User()
         {
-            this.Siparisler = new List<Order>();
+            Siparisler = new List<Order>();
         }
         public string FirstName { get; set; }
         public string LastName { get; set; }

@@ -11,12 +11,12 @@ namespace StokKontrol_API.Entities.Entities
     {
         public Order()
         {
-            this.SiparisDetayı = new List<OrderDetails>();
+            SiparisDetayı = new List<OrderDetails>();
         }
 
         [ForeignKey("Kullanici")]
         public int UserId { get; set; }
-        public virtual User Kullanici { get; set; }
+        public virtual User? Kullanici { get; set; }
 
 
         public virtual List<OrderDetails> SiparisDetayı { get; set; }

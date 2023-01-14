@@ -24,11 +24,11 @@ namespace StokKontrol_API.Entities.Entities
         // Navigation properties
         [ForeignKey("Kategori")]
         public int CategoryId { get; set; }
-        public virtual Category Kategori { get; set; }
+        public virtual Category? Kategori { get; set; }
         
         [ForeignKey("Tedarikci")]
         public int SupplierId { get; set; }
-        public virtual Supplier Tedarikci { get; set; }
+        public virtual Supplier? Tedarikci { get; set; }
 
 
         public List<OrderDetails> SiparisDetayı { get; set; }
