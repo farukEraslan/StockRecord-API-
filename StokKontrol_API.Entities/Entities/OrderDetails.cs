@@ -10,8 +10,8 @@ namespace StokKontrol_API.Entities.Entities
     public class OrderDetails : BaseEntity
     {
         [ForeignKey("Siparis")]
-        public virtual Order Siparis { get; set; }
         public int OrderId { get; set; }
+        public virtual Order Siparis { get; set; }
 
 
         public decimal UnitPrice { get; set; }
@@ -19,8 +19,8 @@ namespace StokKontrol_API.Entities.Entities
 
 
         [ForeignKey("Urun")]
-        public virtual Product Urun { get; set; }
         public int ProductId { get; set; }
+        public virtual Product Urun { get; set; }
 
     }
 }

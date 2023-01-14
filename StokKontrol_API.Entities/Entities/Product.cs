@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace StokKontrol_API.Entities.Entities
 {
-    public class Product
+    public class Product : BaseEntity
     {
         public Product()
         {

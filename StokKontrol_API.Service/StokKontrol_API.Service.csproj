@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\StokKontrol_API.Entities\StokKontrol_API.Entities.csproj" />
+    <ProjectReference Include="..\StokKontrol_API.Repositories\StokKontrol_API.Repositories.csproj" />
+  </ItemGroup>
+
 </Project>

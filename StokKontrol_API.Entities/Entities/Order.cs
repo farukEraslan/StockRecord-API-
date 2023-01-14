@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace StokKontrol_API.Entities.Entities
 {
-    public class Order
+    public class Order : BaseEntity
     {
         public Order()
         {

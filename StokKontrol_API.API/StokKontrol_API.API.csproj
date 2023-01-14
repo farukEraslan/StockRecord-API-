@@ -7,7 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.13" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StokKontrol_API.Repositories\StokKontrol_API.Repositories.csproj" />
+    <ProjectReference Include="..\StokKontrol_API.Service\StokKontrol_API.Service.csproj" />
   </ItemGroup>
 
 </Project>
