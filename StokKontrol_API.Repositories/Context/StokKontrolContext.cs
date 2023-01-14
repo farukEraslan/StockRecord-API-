@@ -21,11 +21,11 @@ namespace StokKontrol_API.Repositories.Context
             optionsBuilder.UseSqlServer("Server=desktop-ufhr98h; Database=StokKontrolAPI; uid=sa; pwd=123");
         }
 
-        private DbSet<Category> Categories { get; set; }
-        private DbSet<Order> Orders { get; set; }
-        private DbSet<OrderDetails> OrderDetails { get; set; }
-        private DbSet<Product> Products { get; set; }
-        private DbSet<Supplier> Suppliers { get; set; }
-        private DbSet<User> Users { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetails> OrderDetails { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }
