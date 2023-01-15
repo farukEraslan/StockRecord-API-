@@ -4,6 +4,7 @@ using StokKontrol_API.Repositories.Concrete;
 using StokKontrol_API.Repositories.Context;
 using StokKontrol_API.Service.Abstract;
 using StokKontrol_API.Service.Concrete;
+using Newtonsoft.Json;
 
 namespace StokKontrol_API.API
 {
@@ -14,6 +15,7 @@ namespace StokKontrol_API.API
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddControllers().AddNewtonsoftJson(option => option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

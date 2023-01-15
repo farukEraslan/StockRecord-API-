@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StokKontrol_API.Entities.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace StokKontrol_API.Entities.Entities
         [Column(Order = 1)]     // Bütün entitylerde bu kolon 1. sırada olacak şekilde ayarlandı.
         public int Id { get; set; }
         public bool IsActive { get; set; }
+        public Status Status { get; set; }
         public DateTime AddedDate { get; set; } = DateTime.Now;
         public DateTime? ModifiedDate { get; set; }
     }
