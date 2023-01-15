@@ -24,6 +24,48 @@ namespace StokKontrol_API.API.Controllers
             _userService = userService;
         }
 
+        // GET: api/TumSiparisleriGetir
+        [HttpGet]
+        public IActionResult TumSiparisleriGetir()
+        {
+            return Ok(_orderService.GetAll());
+        }
+
+        // GET: api/AktifSiparisleriGetir
+        [HttpGet]
+        public IActionResult AktifSiparisleriGetir()
+        {
+            return Ok(_orderService.GetActive());
+        }
+
+        // GET: api/IdyeGoreSiparisleriGetir/5
+        [HttpGet("{id}")]
+        public IActionResult IdyeGoreSiparisleriGetir(int id)
+        {
+            return Ok(_orderService.GetById(id));
+        }
+
+        // GET: api/BekleyenSiparisleriGetir/5
+        [HttpGet]
+        public IActionResult BekleyenSiparisleriGetir()
+        {
+            return Ok(_orderService.GetDefault(x=>x.Status == Status.Pending));
+        }
+
+        // GET: api/OnaylanmışSiparisleriGetir/5
+        [HttpGet]
+        public IActionResult OnaylanmisSiparisleriGetir()
+        {
+            return Ok(_orderService.GetDefault(x => x.Status == Status.Confirmed));
+        }
+
+        // GET: api/IptalEdilenSiparisleriGetir/5
+        [HttpGet]
+        public IActionResult IptalEdilenSiparisleriGetir()
+        {
+            return Ok(_orderService.GetDefault(x => x.Status == Status.Cancelled));
+        }
+
         [HttpPost]
         public IActionResult SiparisEkle(int userId, [FromQuery] int[] productId, [FromQuery] short[] quantity)
         {              
@@ -48,7 +90,7 @@ namespace StokKontrol_API.API.Controllers
             return Ok(orderDetail);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
         public IActionResult SiparisOnayla(int siparisId)
         {
             Order confirmedOrder = _orderService.GetById(siparisId);
@@ -61,11 +103,18 @@ namespace StokKontrol_API.API.Controllers
                 confirmedOrder.Status = Status.Confirmed;
                 confirmedOrder.IsActive = false;
                 _orderService.Update(confirmedOrder);
+                List<OrderDetails> detaylar = _orderDetailService.GetDefault(x => x.OrderId == confirmedOrder.Id);
+                foreach (var item in detaylar)
+                {
+                    Product productInOrder = _productService.GetById(item.ProductId);
+                    productInOrder.Stock -= item.Quantity;
+                    _productService.Update(productInOrder);
+                }
                 return Ok(confirmedOrder);
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
         public IActionResult SiparisReddet(int siparisId)
         {
             Order cancelledOrder = _orderService.GetById(siparisId);
@@ -80,6 +129,32 @@ namespace StokKontrol_API.API.Controllers
                 _orderService.Update(cancelledOrder);
                 return Ok(cancelledOrder);
             }
+        }
+
+        // DELETE: api/SiparisSil/5
+        [HttpDelete]
+        public IActionResult SiparisSil(int id)
+        {
+            var siparis = _orderService.GetById(id);
+            if (siparis == null)
+            {
+                return NotFound();
+            }
+            try
+            {
+                _orderService.Remove(siparis);
+                return Ok("Sipariş Silindi");
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+
+        }
+
+        private bool orderExists(int id)
+        {
+            return _orderService.Any(e => e.Id == id);
         }
     }
 }
