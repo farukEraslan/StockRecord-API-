@@ -48,6 +48,7 @@ namespace StokKontrol_API.API.Controllers
             return Ok(orderDetail);
         }
 
+        [HttpGet("{id}")]
         public IActionResult SiparisOnayla(int siparisId)
         {
             Order confirmedOrder = _orderService.GetById(siparisId);
@@ -64,7 +65,7 @@ namespace StokKontrol_API.API.Controllers
             }
         }
 
-
+        [HttpGet("{id}")]
         public IActionResult SiparisReddet(int siparisId)
         {
             Order cancelledOrder = _orderService.GetById(siparisId);
