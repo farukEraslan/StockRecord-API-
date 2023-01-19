@@ -52,7 +52,7 @@ namespace StokKontrol_API.API.Controllers
             return Ok(_orderService.GetDefault(x=>x.Status == Status.Pending));
         }
 
-        // GET: api/OnaylanmışSiparisleriGetir/5
+        // GET: api/OnaylanmısSiparisleriGetir/5
         [HttpGet]
         public IActionResult OnaylanmisSiparisleriGetir()
         {
@@ -143,7 +143,7 @@ namespace StokKontrol_API.API.Controllers
             try
             {
                 _orderService.Remove(siparis);
-                return Ok("Sipariş Silindi");
+                return Ok("Siparis Silindi");
             }
             catch (Exception)
             {

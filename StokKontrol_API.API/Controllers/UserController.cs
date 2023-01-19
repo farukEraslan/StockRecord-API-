@@ -100,8 +100,8 @@ namespace StokKontrol_API.API.Controllers
             return _service.Any(e => e.Id == id);
         }
 
-        [HttpGet("id")]
-        public IActionResult KullaniciAktifleştir(int id)
+        [HttpGet("{id}")]
+        public IActionResult KullaniciAktiflestir(int id)
         {
             var user = _service.GetById(id);
             if (user == null)

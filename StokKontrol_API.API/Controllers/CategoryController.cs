@@ -104,8 +104,8 @@ namespace StokKontrol_API.API.Controllers
             return _service.Any(e => e.Id == id);
         }
 
-        [HttpGet("id")]
-        public IActionResult KategoriAktifleştir(int id)
+        [HttpGet("{id}")]
+        public IActionResult KategoriAktiflestir(int id)
         {
             var category = _service.GetById(id);
             if (category == null)
