@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using StokKontrol_API.Entities.Entities;
 using System.Text;
@@ -53,10 +54,11 @@ namespace StokKontrol_API.WebUI.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        static List<Category> aktifKategoriler = new List<Category>();
+        static List<Supplier> aktifTedarikciler = new List<Supplier>();
+
         public async Task<IActionResult> UrunEkle()
         {
-            List<Category> aktifKategoriler = new List<Category>();
-            List<Supplier> aktifTedarikciler = new List<Supplier>();
             using (var httpClient = new HttpClient())
             {
                 using (var cevap = await httpClient.GetAsync($"{uri}/api/Category/AktifKategorileriGetir"))
@@ -71,8 +73,8 @@ namespace StokKontrol_API.WebUI.Areas.Admin.Controllers
                 }
             }
 
-            ViewBag.AktifKategoriler = aktifKategoriler;
-            ViewBag.AktifTedarikciler = aktifTedarikciler;
+            ViewBag.AktifKategoriler = new SelectList(aktifKategoriler, "Id", "CategoryName");
+            ViewBag.AktifTedarikciler = new SelectList(aktifTedarikciler, "Id", "SupplierName");
             return View();
         }
 
@@ -111,20 +113,20 @@ namespace StokKontrol_API.WebUI.Areas.Admin.Controllers
                     string apiCevap = await cevap.Content.ReadAsStringAsync();
                     updatedProduct = JsonConvert.DeserializeObject<Product>(apiCevap);
                 }
-                categoryId = updatedProduct.CategoryId;
-                using (var cevap = await httpClient.GetAsync($"{uri}/api/Category/IdyeGoreKategorileriGetir/{categoryId}"))
+
+                using (var cevap = await httpClient.GetAsync($"{uri}/api/Category/AktifKategorileriGetir"))
                 {
                     string apiCevap = await cevap.Content.ReadAsStringAsync();
-                    var kategori = JsonConvert.DeserializeObject<Category>(apiCevap);
-                    kategoriAdi = kategori.CategoryName;
+                    aktifKategoriler = JsonConvert.DeserializeObject<List<Category>>(apiCevap);
                 }
-                supplierId = updatedProduct.SupplierId;
-                using (var cevap = await httpClient.GetAsync($"{uri}/api/Supplier/IdyeGoreTedarikcileriGetir/{supplierId}"))
+                using (var cevap = await httpClient.GetAsync($"{uri}/api/Supplier/AktifTedarikcileriGetir"))
                 {
                     string apiCevap = await cevap.Content.ReadAsStringAsync();
-                    var tedarikci = JsonConvert.DeserializeObject<Supplier>(apiCevap);
-                    tedarikciAdi = tedarikci.SupplierName;
+                    aktifTedarikciler = JsonConvert.DeserializeObject<List<Supplier>>(apiCevap);
                 }
+
+                ViewBag.AktifKategoriler = new SelectList(aktifKategoriler, "Id", "CategoryName");
+                ViewBag.AktifTedarikciler = new SelectList(aktifTedarikciler, "Id", "SupplierName");
 
             }
             return View(updatedProduct);

@@ -19,7 +19,7 @@ namespace StokKontrol_API.API.Controllers
 
         // GET: api/TumKullanicileriGetir
         [HttpGet]
-        public IActionResult TumKullanicileriGetir()
+        public IActionResult TumKullanicilariGetir()
         {
             return Ok(_service.GetAll());
         }

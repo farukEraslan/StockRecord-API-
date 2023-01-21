@@ -42,7 +42,7 @@ namespace StokKontrol_API.API.Controllers
         [HttpGet("{id}")]
         public IActionResult IdyeGoreSiparisleriGetir(int id)
         {
-            return Ok(_orderService.GetById(id));
+            return Ok(_orderService.GetById(id, x=>x.SiparisDetayı, x=>x.Kullanici));
         }
 
         // GET: api/BekleyenSiparisleriGetir/5

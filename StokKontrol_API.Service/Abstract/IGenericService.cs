@@ -16,6 +16,7 @@ namespace StokKontrol_API.Service.Abstract
         bool Remove(int id);
         bool RemoveAll(Expression<Func<T, bool>> exp);
         public T GetById(int id);
+        IQueryable<T> GetById(int id, params Expression<Func<T, object>>[] includes);
         public T GetByDefault(Expression<Func<T, bool>> predicate); // FirstOrDefault'a benzer bir metot oluşturur.
         public List<T> GetActive();
         IQueryable<T> GetActive(params Expression<Func<T, object>>[] includes);

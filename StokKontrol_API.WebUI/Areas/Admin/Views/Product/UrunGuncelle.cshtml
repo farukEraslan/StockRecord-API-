@@ -12,7 +12,7 @@
             <div class="card-body">
                 <!-- Credit Card -->
                 <div id="pay-invoice">
-                    <form asp-area="Admin" asp-controller="Product" asp-action="UrunEkle" method="post">
+                    <form asp-area="Admin" asp-controller="Product" asp-action="UrunGuncelle" method="post">
                         <div class="form-group">
                             <label asp-for="ProductName" class="control-label mb-1">Ürün Adı</label>
                             <input asp-for="ProductName" type="text" class="form-control">
@@ -48,7 +48,7 @@
                         <div>
                             <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
                                 <i class="fa fa-plus-square-o fa-lg"></i>&nbsp;
-                                <span id="payment-button-amount">Urun Ekle</span>
+                                <span id="payment-button-amount">Ürün Güncelle</span>
                                 <span id="payment-button-sending" style="display:none;">Ekleniyor…</span>
                             </button>
                         </div>
@@ -58,5 +58,4 @@
 
         </div>
     </div> <!-- .card -->
-
 </div><!--/.col-->

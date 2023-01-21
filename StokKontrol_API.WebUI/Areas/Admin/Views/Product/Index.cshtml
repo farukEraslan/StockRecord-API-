@@ -4,8 +4,6 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Urun Index</h1>
-
 <div class="content">
     <div class="col-lg-6">
         <div class="card">
@@ -31,8 +29,8 @@
                                         <th>Ürün Adı</th>
                                         <th>Fiyatı</th>
                                         <th>Stok Durumu</th>
-                                        @*<th>Kategori</th>
-                                        <th>Tedarikçi</th>*@
+                                        <th>Kategori</th>
+                                        <th>Tedarikçi</th>
                                         <th>Durumu</th>
                                         <th>İşlemler</th>
                                     </tr>
@@ -44,8 +42,8 @@
                                             <td>@item.ProductName</td>
                                             <td>@item.UnitPrice</td>
                                             <td>@item.Stock</td>
-                                            @*<td>@item.SupplierId</td>
-                                            <td>@item.CategoryId</td>*@
+                                            <td>@item.Kategori.CategoryName</td>
+                                            <td>@item.Tedarikci.SupplierName</td>
                                             <td>
                                                 @if (@item.IsActive)
                                                 {
